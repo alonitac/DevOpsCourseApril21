@@ -18,7 +18,8 @@ def search_download(search_str, search_results):
 
 if __name__ == '__main__':
     # TODO you can change to any search string you want
-    downloaded_files = search_download('הגשש', 5)
+    downloaded_files = search_download('polyphia - goat', 5)
 
     # TODO use downloaded_files and complete a few lines to upload them to an S3 bucket
-
+    s3_client = boto3.client('s3')
+    s3_client.upload_file('downloaded_files', 'Need to create a bucket', 'youtubeFiles')
