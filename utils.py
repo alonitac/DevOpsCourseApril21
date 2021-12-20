@@ -1,28 +1,14 @@
-import boto3
 from datetime import datetime, timezone
-import time
-from credentials import *
-
-client = boto3.client('iam')
 
 
-def get_user_age_seconds(username):
-    response = client.get_user(UserName=username, )
-    user_create_date = response['User']['CreateDate']
-    if username != admin:
-        print("User ' {} ' is active (sec):".format(username),
-              (datetime.now(timezone.utc) - user_create_date).total_seconds())
-    else:
-        pass
-
-    user_seconds = (datetime.now(timezone.utc) - user_create_date).total_seconds()
-    if user_seconds > max_user_age_seconds and username != admin:
-        expired_sub = True
-        print("User  ' {} ' is ".format(username))
-
-    else:
-        expired_sub = False
-    return expired_sub
+def get_user_age_seconds(user_create_date):
+    """
+    This functions gets the user date creation (user['CreateDate'])
+    and returns the total seconds the user is living
+    :param user_create_date:
+    :return:
+    """
+    return (datetime.now(timezone.utc) - user_create_date).total_seconds()
 
 
 def most_frequent_char(my_str):
@@ -32,8 +18,6 @@ def most_frequent_char(my_str):
     'One day you said to me'  ->  ' ' repeats 5 times
     'aabb' -> 'a' or 'b' are both valid returned values
     """
-    pass
+    for i in range(100):
+        print(i)
 
-
-if __name__ == '__main__':
-    get_user_age_seconds("YoutubeDownloader")
