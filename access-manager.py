@@ -1,18 +1,31 @@
 import boto3
 from botocore.exceptions import ClientError
+from termcolor import colored
+import time
 
+client = boto3.client('iam')
+
+# Policy for setting User Permissions
+permission = 'arn:aws:iam::736863849176:policy/S3VideoReader'
 
 def create_user(username):
-    """
-    Create a user "username" with an appropriate permissions (S3VideoReader you've just created)
-    """
-    try:
-        pass  # TODO your code here
-    except ClientError as e:
-        if e.response['Error']['Code'] == 'EntityAlreadyExists':
-            print("User already exists")
-        else:
-            print("Unexpected error: %s" % e)
+    while True:
+        try:
+            response = client.create_user(
+                UserName=username, PermissionsBoundary=permission, Tags=[{'Key':'YoutubeAppSubscriber', 'Value':'username'},])
+            time.sleep(1.2)
+            print((colored("Successfully Created User '{}'".format(username), 'green')))
+            break
+
+        except ClientError as e:
+            if e.response['Error']['Code'] == 'EntityAlreadyExists':
+                print("User already exists")
+                print("Enter a different User Name")
+                username = input("Enter Username: ")
+                continue
+            else:
+                print("Unexpected error: %s" % e)
+                continue
 
 
 def delete_outdated_usernames(max_user_age_seconds):
