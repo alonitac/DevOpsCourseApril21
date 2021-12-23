@@ -14,7 +14,8 @@ pipeline {
               sh '''
               echo "aws docker"
                aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $REGISTRY
-
+               docker build -t simple-falsk-app .
+               docker tag simple-falsk-app:latest 616459547434.dkr.ecr.us-east-2.amazonaws.com/simple-falsk-app:latest
               '''
             }
         }
