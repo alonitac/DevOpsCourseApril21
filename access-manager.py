@@ -8,6 +8,9 @@ client = boto3.client('iam')
 
 
 def create_user(username):
+    """
+    
+    """
     while True:
         try:
             response = client.create_user(UserName=username, PermissionsBoundary=permission,
