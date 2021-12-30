@@ -39,7 +39,7 @@ pipeline {
             fi
             cd $INFRA_ENV
             '''
-            copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
+//             copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
             sh 'terraform apply -auto-approve'
             archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
         }
