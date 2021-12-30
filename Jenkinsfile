@@ -12,6 +12,8 @@ pipeline {
     stage('Terraform Init & Plan'){
         when { anyOf {branch "master";branch "dev";changeRequest()} }
         steps {
+            copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
+
             sh '''
             if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
                 cd infra/prod
