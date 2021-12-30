@@ -31,6 +31,7 @@ pipeline {
             message "Do you want to proceed for infrastructure provisioning?"
         }
         steps {
+            copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
             sh '''
             if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
                 INFRA_ENV=infra/prod
@@ -38,9 +39,8 @@ pipeline {
                 INFRA_ENV=infra/dev
             fi
             cd $INFRA_ENV
+            terraform apply -auto-approve
             '''
-//             copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
-            sh 'pwd && cd infra/dev && terraform apply -auto-approve'
             archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
         }
     }
