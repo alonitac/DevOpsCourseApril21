@@ -1,22 +1,47 @@
 pipeline {
   agent any
 
-  environment {
-       REGISTRY = "736863849176.dkr.ecr.us-east-2.amazonaws.com"
-  }
-
   stages {
-    stage('Build') {
-      when { anyOf {branch "master";branch "dev"} }
+    stage('infra only') {
+        when { changeset "infra/**"}
         steps {
-            echo 'Starting to build docker image'
-            echo 'Authenticatingaws docker registry'
-            script {
-              sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin REGISTRY'
-              // echo 'Building docker image'
-              // sh 'docker build -t simple-flask-app .'
+            echo "infra folder has been changed"
+        }
+    }
 
-            }
+    stage('Terraform Init & Plan'){
+        when { anyOf {branch "master";branch "dev";changeRequest()} }
+        steps {
+            sh '''
+            if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
+                cd infra/prod
+            else
+                cd infra/dev
+            fi
+
+            terraform init
+            terraform plan
+            '''
+        }
+    }
+
+    stage('Terraform Apply'){
+        when { anyOf {branch "master";branch "dev"} }
+        input {
+            message "Do you want to proceed for infrastructure provisioning?"
+        }
+        steps {
+            sh '''
+            if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
+                INFRA_ENV=infra/prod
+            else
+                INFRA_ENV=infra/dev
+            fi
+            cd $INFRA_ENV
+
+            terraform apply -auto-approve
+            '''
+            archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
         }
     }
   }
