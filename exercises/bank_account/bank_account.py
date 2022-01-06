@@ -15,36 +15,38 @@ Instantiate your class, make several deposits and withdrawals, and test to make 
 
 
 class Account:
-    def __init__(self, name, balance):
-        pass
+    def __init__(self, owner, balance):
+        self.balance = balance
+        self.owner = owner
 
-# 1. Instantiate the class
-acct1 = Account('Jose', 100)
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print('Deposit Accepted')
+        else:
+            print('Deposit Rejected')
 
+    def withdraw(self, amount):
+        if self.balance > amount:
+            self.balance -= amount
+            print('Withdrawal Accepted')
+        else:
+            print('Funds Unavailable!')
 
-# 2. Print the object
-print(acct1)
-# output:
-# >> Account owner:   Jose
-# >> Account balance: $100
-
-# 3. Show the account owner attribute
-print(acct1.owner)
-# >> 'Jose'
-
-# 4. Show the account balance attribute
-print(acct1.balance)
-# >> 100
-
-# 5. Make a series of deposits and withdrawals
-acct1.deposit(50)
-# >> Deposit Accepted
-
-acct1.withdraw(75)
-# Withdrawal Accepted
-
-# 6. Make a withdrawal that exceeds the available balance
-acct1.withdraw(500)
-# Funds Unavailable!
+    def __str__(self):
+        return f'Account owner:   {self.owner} \nAccount balance: ${self.balance}'
 
 
+class StudentAccount(Account):
+    pass
+
+
+if __name__ == '__main__':
+    acct1 = Account('Jose', 100)
+    print(acct1.owner)
+    print(acct1.balance)
+    print(acct1)
+    acct1.deposit(50)
+    print(acct1.balance)
+    acct1.withdraw(75)
+    acct1.withdraw(500)
