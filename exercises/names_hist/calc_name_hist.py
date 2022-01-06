@@ -12,6 +12,27 @@ def names_histogram(names, ignore=[]):
     :return: List of tuples in the form ('John', 4)
              Such that 'John' appears 4 times in the list
     """
+    names_count = dict()
+    for name in names:
+        if name not in names_count:
+            if name not in ignore:
+                names_count[name] = 1
+        else:
+            names_count[name] += 1
+
+    return list(names_count.items())
+
+
+
+    # create a liat
+    # iterate over names
+    # i = 1
+    # iterate again over names
+    # if the name from 1st loop equals to current
+    # increase i by 1
+    # mark this name as visited
+    # add (name, i) to the list
+
     pass   # your code here
 
 
@@ -29,5 +50,5 @@ if __name__ == '__main__':
         names = [line.rstrip() for line in lines]
 
     hist = names_histogram(names, ignore=['Jordi', 'Ram'])
-    draw_first_n(hist)
+    draw_first_n(hist, n=5)
     print('Done')
