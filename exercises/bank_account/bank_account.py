@@ -38,15 +38,14 @@ class Account:
 
 
 class StudentAccount(Account):
-    pass
+    def withdraw(self, amount):
+        if amount <= 120:
+            super().withdraw(amount)
+        else:
+            print('The maximum allowed amount to withdraw is 120')
 
 
 if __name__ == '__main__':
-    acct1 = Account('Jose', 100)
-    print(acct1.owner)
-    print(acct1.balance)
-    print(acct1)
+    acct1 = StudentAccount('Jose', 100)
     acct1.deposit(50)
-    print(acct1.balance)
-    acct1.withdraw(75)
-    acct1.withdraw(500)
+    acct1.withdraw(121)
