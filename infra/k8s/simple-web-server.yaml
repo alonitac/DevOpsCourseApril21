@@ -16,4 +16,4 @@ spec:
     spec:
       containers:
         - name: simple-web-server
-          image: lmmdock/flask-webserver:latest
+          image: public.ecr.aws/t0g1s4n9/testsimplewebserver:1.0
