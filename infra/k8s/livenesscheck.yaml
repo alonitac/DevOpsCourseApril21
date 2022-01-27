@@ -1,0 +1,16 @@
+apiversion: v1
+kind: pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-http
+spec:
+  containers:
+    -name: livenss
+     image: 955114013936.dkr.ecr.us-east-2.amazonaws.com/simplewebapp:1.1
+     livenessProbe:
+       httpGet:
+         path: /healthz
+         port: 8080
+       initalDealtSecounds: 3
+       periosSecounds: 3
