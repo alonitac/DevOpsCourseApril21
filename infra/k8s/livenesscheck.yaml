@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     -name: livenss
-     image: 955114013936.dkr.ecr.us-east-2.amazonaws.com/simplewebapp:1.1
+     image: public.ecr.aws/t0g1s4n9/testsimplewebserver:1.1
      livenessProbe:
        httpGet:
          path: /healthz
