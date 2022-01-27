@@ -16,7 +16,13 @@ spec:
     spec:
       containers:
         - name: simple-web-server
-          image: public.ecr.aws/t0g1s4n9/testsimplewebserver:1.0
+          image: 955114013936.dkr.ecr.us-east-2.amazonaws.com/simplewebapp:1.1
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+          initiaalDelayDecounds: 3
+          periodSecounds: 3
 ---
 apiVersion: v1
 kind: Service

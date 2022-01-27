@@ -1,17 +1,29 @@
 from flask import Flask
-
+req_red = 1
 app = Flask(__name__)
 
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>", 200
+    return "<p>Hello, World!</p>"
 
 
-@app.route("/healthy")
-def healthy():
-    return "healthy", 200
+@app.route("/<name>")
+def hello(name):
+    return f"Hello, {name}!"
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+
+@app.route("/healthz")
+def healthcheck():
+    global req_red
+    req_red += 1
+    if req_red > 20:
+        return "" , 200
+    return "" , 500
+
+
+
+
+app.run(host='0.0.0.0', port=8080)
+
