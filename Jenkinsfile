@@ -17,10 +17,10 @@ pipeline {
             copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
         }
 
-        stage('Load Artifact - prod') {
-            when { anyOf {branch "master"} }
-            copyArtifacts filter: 'infra/prod/terraform.tfstate', projectName: '${JOB_NAME}'
-        }
+//         stage('Load Artifact - prod') {
+//             when { anyOf {branch "master"} }
+//             copyArtifacts filter: 'infra/prod/terraform.tfstate', projectName: '${JOB_NAME}'
+//         }
 
         stage('Terraform Init & Plan'){
             when { anyOf {branch "master";branch "dev";changeRequest()} }
