@@ -19,7 +19,7 @@ resource "aws_instance" "Terraform-Test-ec2" {
   instance_type = "t2.micro"
 
   tags = {
-    Name = "ExampleAppServerInstanceDev"
+    Name = "ExampleAppServerInstanceProd"
     Terraform = "True"
   }
 }
