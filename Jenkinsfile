@@ -30,6 +30,7 @@ pipeline {
             when { anyOf {branch "master";branch "dev";changeRequest()} }
             steps {
                 sh '''
+                echo $tfEnv
                 cd infra/${tfEnv}
                 terraform init
                 terraform plan
