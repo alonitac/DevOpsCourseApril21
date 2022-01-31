@@ -1,19 +1,7 @@
-def tfEnv = 'dev'
-
 pipeline {
   agent any
 
   stages {
-        stage('Env Settings') {
-            steps {
-                sh '''
-                if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
-                    tfEnv='prod'
-                fi
-                '''
-            }
-        }
-
         stage('Load Artifact - dev') {
             when { anyOf {branch "dev"} }
             steps {
@@ -30,8 +18,11 @@ pipeline {
             when { anyOf {branch "master";branch "dev";changeRequest()} }
             steps {
                 sh '''
-                echo $tfEnv
-                cd infra/${tfEnv}
+                if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
+                    cd infra/prod
+                else
+                    cd infra/dev
+                fi
                 terraform init
                 terraform plan
                 '''
