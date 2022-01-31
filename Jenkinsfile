@@ -5,16 +5,20 @@ pipeline {
 
   stages {
         stage('Env Settings') {
-            sh '''
-            if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
-                tfEnv='prod'
-            fi
-            '''
+            steps {
+                sh '''
+                if [ "$BRANCH_NAME" = "master" ] || [ "$CHANGE_TARGET" = "master" ]; then
+                    tfEnv='prod'
+                fi
+                '''
+            }
         }
 
         stage('Load Artifact - dev') {
             when { anyOf {branch "dev"} }
-            copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
+            steps {
+                copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
+            }
         }
 
 //         stage('Load Artifact - prod') {
@@ -57,7 +61,6 @@ pipeline {
                 archiveArtifacts artifacts: 'infra/prod/terraform.tfstate', onlyIfSuccessful: true
             }
         }
-
   }
 }
 
