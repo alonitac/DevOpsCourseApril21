@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh '''
                 cd infra/dev
-                terraform apply
+                terraform apply -auto-approve
                 '''
                 archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
             }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 sh '''
                 cd infra/prod
-                terraform apply
+                terraform apply -auto-approve
                 '''
                 archiveArtifacts artifacts: 'infra/prod/terraform.tfstate', onlyIfSuccessful: true
             }
