@@ -15,7 +15,7 @@ def health_check():
     global req_count
 
     req_count += 1
-    if req_count > 40:
+    if req_count > 50:
         return "", 500
     else:
         return "", 200
