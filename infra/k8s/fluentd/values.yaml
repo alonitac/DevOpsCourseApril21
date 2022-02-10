@@ -1,0 +1,7 @@
+fileConfigs:
+  04_outputs.conf: |-
+    <label @OUTPUT>
+      # YOUR CloudWatch <match> HERE
+    </label>
+
+plugins: []
