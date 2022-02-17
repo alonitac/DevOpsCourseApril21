@@ -16,7 +16,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - # < cert host here >
+        - anthonycornell.com
       secretName: tls-secret
   rules:
     - host: # < full host here >
