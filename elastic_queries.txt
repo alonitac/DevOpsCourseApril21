@@ -1,0 +1,29 @@
+GET logs-my_app-default/_search?size=1000
+{
+  "runtime_mappings": {
+    "return_code": {
+      "type": "keyword",
+      "script": """
+        String retcode=grok('.* HTTP/.* %{NUMBER:ret_code} .*').extract(doc[ "event.original" ].value)?.ret_code;
+        if (retcode != null) emit(retcode);
+      """
+    }
+  },
+  "query": {
+    "range": {
+      "@timestamp": {
+        "gte": "2099-05-05",
+        "lt": "2099-05-08"
+      }
+    }
+  },
+  "fields": [
+    "@timestamp",
+    "return_code"
+  ],
+  "sort": [
+    {
+      "@timestamp": "desc"
+    }
+  ]
+}
