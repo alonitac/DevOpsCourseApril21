@@ -1,6 +1,8 @@
 from flask import Flask
-req_red = 1
+
+
 app = Flask(__name__)
+req_count = 1
 
 
 @app.route("/")
@@ -8,21 +10,20 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+@app.route("/healthz")
+def health_check():
+    global req_count
+
+    req_count += 1
+    if req_count > 50:
+        return "", 500
+    else:
+        return "", 200
+
+
 @app.route("/<name>")
 def hello(name):
     return f"Hello, {name}!"
-
-
-
-@app.route("/healthz")
-def healthcheck():
-    global req_red
-    req_red += 1
-    if req_red > 20:
-        return "" , 200
-    return "" , 500
-
-
 
 
 app.run(host='0.0.0.0', port=8080)
