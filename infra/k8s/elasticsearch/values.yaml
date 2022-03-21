@@ -10,3 +10,7 @@ resources:
     memory: "2Gi"
 
 protocol: http
+
+antiAffinity: "soft"
+
+replicas: 2
