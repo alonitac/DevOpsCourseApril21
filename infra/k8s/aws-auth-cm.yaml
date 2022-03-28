@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::352708296901:role/apr21-k8s-ng-cluster
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+    - rolearn: arn:aws:iam::352708296901:role/JenkinsAdmin
+      username: jenkins
+      groups:
+        - eks-console-dashboard-full-access-clusterrole
+        - system:masters
+  mapUsers: |
+    - userarn: arn:aws:iam::352708296901:user/aws26
+      username: daniel
+      groups:
+        - eks-console-dashboard-full-access-group
+        - system:masters
+    - userarn: arn:aws:iam::352708296901:user/aws27
+      username: marina
+      groups:
+        - eks-console-dashboard-full-access-group
+        - system:masters
+    - userarn: arn:aws:iam::352708296901:user/aws28
+      username: eyal
+      groups:
+        - eks-console-dashboard-full-access-group
+        - system:masters
+    - userarn: arn:aws:iam::352708296901:user/aws29
+      username: shai
+      groups:
+        - eks-console-dashboard-full-access-group
+        - system:masters
+    - userarn: arn:aws:iam::352708296901:user/aws30
+      username: yakir
+      groups:
+        - eks-console-dashboard-full-access-group
+        - system:masters
+    - userarn: arn:aws:iam::352708296901:user/aws35
+      username: noam
+      groups:
+        - eks-console-dashboard-full-access-group
+        - system:masters
+    - userarn: arn:aws:iam::352708296901:user/aws34
+      username: alontest
+      groups:
+        - eks-console-dashboard-full-access-group
+        - system:masters
