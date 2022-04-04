@@ -2,6 +2,37 @@ pipeline {
   agent any
 
   stages {
+        stage('Build fantastic ascii'){
+            steps {
+                sh '''
+                cd package_demo
+                python setup.py sdist bdist_wheel
+                '''
+            }
+        }
+
+        stage('Publish fantastic ascii'){
+            steps {
+                rtServer (
+                    id: 'Artifactory-1',
+                    url: 'https://devopsmar22.jfrog.io/artifactory',
+                    credentialsId: 'jfroge-pip'
+                )
+
+                rtUpload (
+                    serverId: 'Artifactory-1',
+                    spec: '''{
+                          "files": [
+                            {
+                              "pattern": "package_demo/dist",
+                              "target": "default-pypi/"
+                            }
+                         ]
+                    }'''
+                )
+            }
+        }
+
         stage('Load Artifact - dev') {
             when { anyOf {branch "dev"} }
             steps {
