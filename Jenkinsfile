@@ -16,7 +16,7 @@ pipeline {
                 rtServer (
                     id: 'Artifactory-1',
                     url: 'https://devopsmar22.jfrog.io/artifactory',
-                    credentialsId: 'jfroge-pip'
+                    credentialsId: 'jfrog'
                 )
 
                 rtUpload (
