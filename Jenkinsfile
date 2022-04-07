@@ -25,7 +25,7 @@ pipeline {
                           "files": [
                             {
                               "pattern": "package_demo/dist/",
-                              "target": "default-pypi/"
+                              "target": "internal-pypi/"
                             }
                          ]
                     }'''
