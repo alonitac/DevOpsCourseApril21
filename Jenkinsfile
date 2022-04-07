@@ -24,7 +24,7 @@ pipeline {
                     spec: '''{
                           "files": [
                             {
-                              "pattern": "package_demo/dist",
+                              "pattern": "package_demo/dist/",
                               "target": "default-pypi/"
                             }
                          ]
